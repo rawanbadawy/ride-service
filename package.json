@@ -4,6 +4,7 @@
   "description": "Microservice for managing rides in the Car Pooling System",
   "main": "dist/main.js",
   "scripts": {
+    "prebuild": "chmod -R 755 node_modules/.bin",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
