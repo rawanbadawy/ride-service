@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+
+
+} 
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")  // Your database connection string
+}
+
+model Zone {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  routes    Route[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+
+model Route {
+  id          Int           @id @default(autoincrement())
+  name        String
+  zoneId      Int
+  zone        Zone          @relation(fields: [zoneId], references: [id])
+  meetingPoints MeetingPoint[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model MeetingPoint {
+  id             Int     @id @default(autoincrement())
+  name           String  @unique  
+  distanceToGIU  Float
+  priceToGIU     Float
+  routeId        Int
+  route          Route   @relation(fields: [routeId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+
+model Ride {
+  id            String   @id @default(uuid())
+  driverId      String
+  destination   String
+  meetingPoint  String
+  dateTime      DateTime
+  seats         Int
+  price         Float
+  pricePerSeat  Float    @default(0) // Set a default value, e.g., 0
+  isGirlsOnly   Boolean  @default(false)
+  status        String   @default("PENDING")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

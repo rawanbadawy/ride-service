@@ -1,0 +1,111 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Ride {
+  id: ID!
+  driverId: String!
+  destination: String!
+  meetingPoint: String!
+  dateTime: DateTime!
+  seats: Float!
+  price: Float!
+  pricePerSeat: Float!
+  isGirlsOnly: Boolean!
+  status: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type RidePrice {
+  meetingPoint: String!
+  priceToGIU: Float!
+  distanceToGIU: Float!
+}
+
+type MeetingPoint {
+  id: Int!
+  name: String!
+  distanceToGIU: Float!
+  priceToGIU: Float!
+  routeId: Int!
+}
+
+type Route {
+  id: Int!
+  name: String!
+  zoneId: Int!
+  meetingPoints: [MeetingPoint!]!
+}
+
+type Zone {
+  id: Int!
+  name: String!
+  routes: [Route!]!
+}
+
+type Query {
+  getRides(filters: RideFiltersInput, searchTerm: String): [Ride!]!
+  getRideById(id: String!): Ride
+  getRidesByDriverId(driverId: String!): [Ride!]!
+  getZones: [Zone!]!
+}
+
+input RideFiltersInput {
+  meetingPoint: String
+  destination: String
+  dateTime: DateTimeFilter
+  isGirlsOnly: Boolean
+}
+
+input DateTimeFilter {
+  gte: DateTime
+}
+
+type Mutation {
+  createRide(data: CreateRideDto!): Ride!
+  updateRide(id: String!, data: UpdateRideDto!): Ride!
+  deleteRide(id: String!): Ride!
+  calculateRidePrice(zoneName: String!, routeName: String!, meetingPointName: String!): RidePrice!
+  createZone(data: CreateZoneDto!): Zone!
+}
+
+input CreateRideDto {
+  driverId: String!
+  destination: String!
+  meetingPoint: String!
+  dateTime: DateTime
+  seats: Float!
+  isGirlsOnly: Boolean!
+  zoneName: String!
+}
+
+input UpdateRideDto {
+  driverId: String
+  destination: String
+  meetingPoint: String
+  dateTime: DateTime
+  seats: Float
+  isGirlsOnly: Boolean
+  zoneName: String
+}
+
+input CreateZoneDto {
+  name: String!
+  routes: [CreateRouteDto!]!
+}
+
+input CreateRouteDto {
+  name: String!
+  meetingPoints: [CreateMeetingPointDto!]!
+}
+
+input CreateMeetingPointDto {
+  name: String!
+  distanceToGIU: Float!
+}

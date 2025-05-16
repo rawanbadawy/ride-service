@@ -1,0 +1,95 @@
+import { PrismaService } from '../prisma/prisma.service';
+import { CreateRideDto } from './dto/create-ride.dto';
+import { UpdateRideDto } from './dto/update-ride.dto';
+import { PaymentService } from '../../../payment-service/src/payment/payment.service';
+export declare class RideService {
+    private readonly prisma;
+    private readonly paymentService;
+    constructor(prisma: PrismaService, paymentService: PaymentService);
+    getRides(): Promise<{
+        id: string;
+        driverId: string;
+        destination: string;
+        meetingPoint: string;
+        zoneName: string | null;
+        dateTime: Date;
+        seats: number;
+        price: number;
+        isGirlsOnly: boolean;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
+    getRideById(id: string): Promise<{
+        id: string;
+        driverId: string;
+        destination: string;
+        meetingPoint: string;
+        zoneName: string | null;
+        dateTime: Date;
+        seats: number;
+        price: number;
+        isGirlsOnly: boolean;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    createRide(data: CreateRideDto): Promise<{
+        id: string;
+        driverId: string;
+        destination: string;
+        meetingPoint: string;
+        zoneName: string | null;
+        dateTime: Date;
+        seats: number;
+        price: number;
+        isGirlsOnly: boolean;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    private calculatePrice;
+    updateRide(id: string, data: UpdateRideDto): Promise<{
+        id: string;
+        driverId: string;
+        destination: string;
+        meetingPoint: string;
+        zoneName: string | null;
+        dateTime: Date;
+        seats: number;
+        price: number;
+        isGirlsOnly: boolean;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    deleteRide(id: string): Promise<{
+        id: string;
+        driverId: string;
+        destination: string;
+        meetingPoint: string;
+        zoneName: string | null;
+        dateTime: Date;
+        seats: number;
+        price: number;
+        isGirlsOnly: boolean;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    searchRides(destination: string, meetingPoint: string): Promise<{
+        id: string;
+        driverId: string;
+        destination: string;
+        meetingPoint: string;
+        zoneName: string | null;
+        dateTime: Date;
+        seats: number;
+        price: number;
+        isGirlsOnly: boolean;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
+    calculateRidePrice(zoneName: string, routeName: string, meetingPointName: string): Promise<any>;
+}
