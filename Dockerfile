@@ -1,26 +1,21 @@
-# Use official Node.js image as a base image
-FROM node:16
+# Use Node.js 18.x Alpine version for a smaller build image
+FROM node:18-alpine
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json first to install dependencies
+# Install dependencies
 COPY package*.json ./
-
-# Install all dependencies, including Prisma
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the application code
 COPY . .
 
-# Make sure prisma has executable permissions
-RUN chmod +x ./node_modules/.bin/prisma
-
-# Run Prisma generate to ensure the Prisma Client is generated correctly
+# Generate Prisma client
 RUN npx prisma generate
 
-# Expose the application port
+# Expose the necessary port
 EXPOSE 3000
 
-# Set the command to start the application
-CMD ["npm", "run", "start"]
+# Command to run your application
+CMD ["npm", "start"]
